@@ -10,7 +10,7 @@ import PresetBrowser from '../components/PresetBrowser';
 import MutationPanel from '../components/MutationPanel';
 import ScorePanel from '../components/ScorePanel';
 import ArrangementTimeline from '../components/ArrangementTimeline';
-import ReferenceBlueprintPanel from '../components/ReferenceBlueprintPanel';
+import CalibrationBaselinePanel from '../components/CalibrationBaselinePanel';
 import AdvisorPanel from '../components/AdvisorPanel';
 import BlueprintLibraryPanel from '../components/BlueprintLibraryPanel';
 import { 
@@ -25,7 +25,15 @@ import {
 
 export default function SoundMachinaApp() {
   const { fetchPresets, presets, selectedPresetId, savePreset } = usePresetStore();
-  const { generatePrompts, exportCurrent, blueprint } = useProjectStore();
+  const { 
+    generatePrompts, 
+    exportCurrent, 
+    blueprint,
+    activeSnapshotId,
+    driftScore,
+    driftClassification,
+    referenceBlueprint
+  } = useProjectStore();
   const { notification, showSaveDialog, setShowSaveDialog, showNotification } = useUiStore();
   
   const [newPresetName, setNewPresetName] = useState('');
@@ -132,12 +140,42 @@ export default function SoundMachinaApp() {
         </div>
 
         {/* Operating status monitor */}
-        <div className="flex items-center space-x-6 text-xs font-mono">
+        <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs font-mono">
           <div className="flex flex-col items-end">
-            <span className="text-[9px] text-zinc-500 uppercase tracking-widest">ACTIVE PROGRAM</span>
-            <span className="text-cyan-400 font-bold tracking-widest uppercase">{activePresetName}</span>
+            <span className="text-[9px] text-zinc-500 uppercase tracking-widest">ACTIVE BLUEPRINT</span>
+            <span className="text-cyan-400 font-bold tracking-widest uppercase">{activeSnapshotId || activePresetName}</span>
           </div>
+          
           <div className="h-8 w-px bg-zinc-800 hidden sm:block"></div>
+          
+          <div className="flex flex-col items-end">
+            <span className="text-[9px] text-zinc-500 uppercase tracking-widest">DRIFT</span>
+            <span className="text-zinc-200 font-bold tracking-widest uppercase">
+              {referenceBlueprint ? `${driftScore}%` : '--'}
+            </span>
+          </div>
+
+          <div className="h-8 w-px bg-zinc-800 hidden sm:block"></div>
+
+          <div className="flex flex-col items-end">
+            <span className="text-[9px] text-zinc-500 uppercase tracking-widest">STATUS</span>
+            <span className={`font-bold tracking-widest uppercase ${
+              !referenceBlueprint 
+                ? 'text-zinc-500' 
+                : driftScore > 50 
+                ? 'text-red-400 animate-pulse' 
+                : driftScore > 25 
+                ? 'text-amber-400' 
+                : driftScore > 10 
+                ? 'text-cyan-400' 
+                : 'text-green-400'
+            }`}>
+              {referenceBlueprint ? driftClassification : 'STANDBY'}
+            </span>
+          </div>
+
+          <div className="h-8 w-px bg-zinc-800 hidden sm:block"></div>
+
           <div className="flex items-center space-x-2 bg-zinc-950/80 px-3 py-1.5 border border-zinc-850 rounded">
             <div className="w-2 h-2 rounded-full bg-green-500 animate-ping"></div>
             <span className="text-[10px] tracking-widest text-green-500 uppercase">SYS_NORMAL // ONLINE</span>
@@ -161,13 +199,13 @@ export default function SoundMachinaApp() {
           <ArrangementTimeline />
         </div>
 
-        {/* Column 3: Systems Management (Presets & Mutations), Reference Blueprint & Registry */}
+        {/* Column 3: Systems Management (Presets & Mutations), Calibration Baseline & Registry */}
         <div className="lg:col-span-12 xl:col-span-3 flex flex-col space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-1 gap-6">
             <PresetBrowser />
             <MutationPanel />
           </div>
-          <ReferenceBlueprintPanel />
+          <CalibrationBaselinePanel />
           <BlueprintLibraryPanel />
         </div>
       </div>

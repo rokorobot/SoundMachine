@@ -35,6 +35,8 @@ export const useProjectStore = create((set, get) => ({
   // Compare mode state
   referenceBlueprint: null,
   comparisonResult: null,
+  driftScore: 0,
+  driftClassification: 'Nearly identical',
 
   setBlueprintField: (field, value) => {
     set((state) => ({
@@ -63,7 +65,12 @@ export const useProjectStore = create((set, get) => ({
   },
 
   clearReferenceBlueprint: () => {
-    set({ referenceBlueprint: null, comparisonResult: null });
+    set({ 
+      referenceBlueprint: null, 
+      comparisonResult: null,
+      driftScore: 0,
+      driftClassification: 'Nearly identical'
+    });
   },
 
   runComparison: async () => {
@@ -87,7 +94,41 @@ export const useProjectStore = create((set, get) => ({
       }
 
       const data = await response.json();
-      set({ comparisonResult: data });
+
+      const PARAMS = [
+        'genre', 'bpm', 'energy', 'motif_type', 'motif_presence',
+        'motif_behavior', 'harmony_mode', 'harmony_complexity',
+        'bass_aggression', 'glitch_density', 'drum_intensity',
+        'atmosphere_depth', 'target_model'
+      ];
+
+      let driftScore = 0;
+      let driftClassification = 'Nearly identical';
+      let totalDrift = 0;
+      const count = PARAMS.length;
+
+      PARAMS.forEach(key => {
+        const diffObj = data.diff?.[key];
+        if (diffObj) {
+          if (typeof diffObj.delta === 'number') {
+            const range = key === 'bpm' ? 200 : 100;
+            totalDrift += Math.abs(diffObj.delta) / range;
+          } else {
+            totalDrift += 0.4;
+          }
+        }
+      });
+
+      driftScore = Math.round((totalDrift / count) * 100);
+      if (driftScore > 50) driftClassification = 'New blueprint';
+      else if (driftScore > 25) driftClassification = 'Significant mutation';
+      else if (driftScore > 10) driftClassification = 'Minor variation';
+
+      set({ 
+        comparisonResult: data,
+        driftScore,
+        driftClassification
+      });
     } catch (err) {
       console.error("Comparison error:", err);
     }

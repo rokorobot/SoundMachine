@@ -12,8 +12,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Sound Machina v0.1 // Neural Music Direction Console",
-  description: "Create controllable, repeatable, high-impact prompts for Suno, Udio, and future AI music systems.",
+  title: "Sound Machina v0.3.2 // Neural Music Direction Console",
+  description: "A deterministic control plane for AI music composition, combining prompt generation, motif engineering, version control, diagnostics, and blueprint lineage.",
 };
 
 export default function RootLayout({ children }) {
@@ -21,6 +21,7 @@ export default function RootLayout({ children }) {
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

@@ -123,7 +123,7 @@ export default function BlueprintLibraryPanel() {
                     <button
                       onClick={() => setReferenceBlueprintFromSnapshot(snap.blueprint)}
                       className="px-2 py-0.75 bg-zinc-950 hover:bg-zinc-900 border border-zinc-850 hover:border-zinc-750 text-zinc-500 hover:text-zinc-300 rounded text-[8px] font-bold transition flex items-center space-x-1"
-                      title="Set snapshot as Comparison reference"
+                      title="Set snapshot as Calibration baseline"
                     >
                       <GitPullRequest className="w-2.5 h-2.5" />
                       <span>COMPARE</span>

@@ -4,13 +4,15 @@ import React from 'react';
 import { useProjectStore } from '../store/projectStore';
 import { Anchor, RotateCcw, ArrowRight, TrendingUp, TrendingDown, GitCommit } from 'lucide-react';
 
-export default function ReferenceBlueprintPanel() {
+export default function CalibrationBaselinePanel() {
   const { 
     blueprint,
     referenceBlueprint, 
     comparisonResult, 
     setReferenceBlueprint, 
-    clearReferenceBlueprint 
+    clearReferenceBlueprint,
+    driftScore,
+    driftClassification
   } = useProjectStore();
 
   const handleLockReference = () => {
@@ -55,35 +57,6 @@ export default function ReferenceBlueprintPanel() {
     return typeof val === 'string' ? val.toUpperCase() : val;
   };
 
-  // Calculate Blueprint Drift Score
-  let driftScore = 0;
-  let driftClassification = 'Nearly identical';
-  
-  if (hasReference) {
-    let totalDrift = 0;
-    const count = PARAMS.length;
-    
-    PARAMS.forEach(param => {
-      const key = param.key;
-      const diffObj = comparisonResult?.diff?.[key];
-      if (diffObj) {
-        if (typeof diffObj.delta === 'number') {
-          // Sliders are 0-100 (range 100), BPM is 40-240 (range 200)
-          const range = key === 'bpm' ? 200 : 100;
-          totalDrift += Math.abs(diffObj.delta) / range;
-        } else {
-          // String changes (genre, motif_type, behavior, target platform)
-          totalDrift += 0.4; // 40% flat penalty for structural changes
-        }
-      }
-    });
-    
-    driftScore = Math.round((totalDrift / count) * 100);
-    if (driftScore > 50) driftClassification = 'New blueprint';
-    else if (driftScore > 25) driftClassification = 'Significant mutation';
-    else if (driftScore > 10) driftClassification = 'Minor variation';
-  }
-
   return (
     <div className="border border-zinc-800 bg-zinc-950/90 backdrop-blur rounded-lg p-5 shadow-2xl flex flex-col h-full space-y-4">
       
@@ -91,7 +64,7 @@ export default function ReferenceBlueprintPanel() {
       <div className="flex items-center justify-between border-b border-zinc-850 pb-2.5">
         <div className="flex items-center space-x-2">
           <GitCommit className="w-4 h-4 text-cyan-500" />
-          <h2 className="text-xs font-bold font-mono tracking-widest text-zinc-100 uppercase">REFERENCE BLUEPRINT</h2>
+          <h2 className="text-xs font-bold font-mono tracking-widest text-zinc-100 uppercase">CALIBRATION BASELINE</h2>
         </div>
         
         {hasReference ? (
@@ -116,14 +89,14 @@ export default function ReferenceBlueprintPanel() {
           <div className="space-y-1 max-w-xs">
             <h3 className="text-xs font-bold font-mono text-zinc-400 uppercase tracking-widest">NO BASELINE LOCK</h3>
             <p className="text-[9px] font-mono text-zinc-550 leading-relaxed">
-              Lock current parameters as reference telemetry to monitor real-time slider drift and delta score changes.
+              Lock current parameters as calibration telemetry to monitor real-time slider drift and delta score changes.
             </p>
           </div>
           <button
             onClick={handleLockReference}
             className="px-4 py-2 bg-cyan-950/20 hover:bg-cyan-900/20 border border-cyan-800/80 hover:border-cyan-600 text-cyan-500 font-mono text-xs rounded tracking-widest transition duration-200"
           >
-            LOCK REFERENCE SNAPSHOT
+            LOCK CALIBRATION SNAPSHOT
           </button>
         </div>
       ) : (

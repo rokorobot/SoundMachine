@@ -15,7 +15,7 @@ seed_database()
 app = FastAPI(
     title="Sound Machina API",
     description="Deterministic neural music composition engine and prompt generator",
-    version="0.3"
+    version="0.3.2"
 )
 
 # Configure CORS
@@ -37,5 +37,6 @@ def read_root():
     return {
         "status": "online",
         "service": "Sound Machina Engine",
-        "version": "0.1"
+        "version": "0.3.2",
+        "api_schema": "v1"
     }

@@ -1,8 +1,10 @@
 # Sound Machina
 
+![Sound Machina Operator Console](docs/screenshots/operator-console-v0.3.1.png)
+
 > Neural Music Direction Console
 
-Sound Machina is a deterministic music composition control plane for AI music systems such as Suno, Udio, and future generative audio platforms.
+Sound Machina is a deterministic control plane for AI music composition, combining prompt generation, motif engineering, version control, diagnostics, and blueprint lineage.
 
 Instead of manually writing prompts, operators build structured musical blueprints, analyze composition quality, track creative evolution, compare versions, and restore previous states through a TM4-inspired governance workflow.
 
@@ -235,7 +237,7 @@ Implemented:
 * Governance Diagnostics
 * Optimization Advisor
 * Blueprint Registry
-* Reference Blueprint System
+* Calibration Baseline System
 * Blueprint Drift Score
 * Multi-Bank Preset Architecture
 
