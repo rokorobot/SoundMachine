@@ -43,10 +43,27 @@ cryptographic byte-identity is not proven** because no starting hash was
 recorded. Current SHA-256 (forward baseline):
 `3832aa7afc34d991c7ab82e18b484c5e7a9234eeb35af0c0cd952822ca984b92`.
 
-## Independent gate status
+## Verification independence status
 
-An adversarial gate returned FAIL for push/PR/merge on the basis of missing
-executable contract tests (T8/T19/T20/T30), the R17 wording above, and a missing
-user-facing breaking-change notice — all addressed here and in `CHANGELOG.md`.
-The gate found no functional correctness defect in the shipped code; the one
-defect surfaced during remediation (T19) was display-only and is fixed.
+**The WS1 implementation and its remediation were both authored by Fable 5
+(`claude-fable-5`). No model-independent verification has been performed yet.**
+Accurate provenance of each verification pass:
+
+- **Phase 5 (post-implementation verification):** performed by Fable 5, the
+  author — this was **author self-verification**, not an independent gate.
+- **First adversarial gate (also run by Fable 5, the author):** returned FAIL
+  for push/PR/merge on the basis of missing executable contract tests
+  (T8/T19/T20/T30), the R17 wording above, and a missing user-facing
+  breaking-change notice — all addressed here and in `CHANGELOG.md`. It found
+  no functional correctness defect in the shipped code; the one defect later
+  surfaced during remediation (T19) was display-only and is fixed.
+- **Phase 6 self-audit (Fable 5, the author):** re-executed and reproduced the
+  substantive evidence (all four contract tests closed, the T19 RED→GREEN
+  reconstruction against pre-fix code, suites/build green, live-DB fingerprint
+  byte-identical), but returned **BLOCKED** solely because the author and the
+  verifier were the same model — verifier independence was unmet. This run must
+  not be read as independent, model-independent, or an acceptance PASS.
+
+**No independent PASS has been issued.** Push, PR, and merge remain withheld
+until a fresh gate run by Opus (a model that did not author this work)
+independently returns PASS.
