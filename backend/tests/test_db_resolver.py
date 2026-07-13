@@ -1,7 +1,6 @@
 """T39 + C2 + T27: database path resolution, absolute-only env override,
 CWD independence, and ambiguity detection. No live database is touched."""
 import os
-from pathlib import Path
 
 import pytest
 
@@ -19,7 +18,7 @@ def test_default_anchor_points_at_backend_db():
 
 def test_default_resolution_is_cwd_independent(tmp_path):
     a = resolve_db_path(env={}, cwd=tmp_path / "cwd_a")
-    b = resolve_db_path(env={}, cwd=Path("C:/"))
+    b = resolve_db_path(env={}, cwd=tmp_path / "cwd_b")
     c = resolve_db_path(env={}, cwd=tmp_path / "another")
     # All three must resolve to the identical anchored default.
     assert a == b == c == DEFAULT_DB_PATH
@@ -35,14 +34,14 @@ def test_absolute_env_override_honored(tmp_path):
 
 # --- C2-b: relative override rejected, never CWD-resolved ---
 
-def test_relative_env_override_rejected():
+def test_relative_env_override_rejected(tmp_path):
     with pytest.raises(StartupError):
-        resolve_db_path(env={"SOUND_MACHINA_DB": "relative/sound_machina.db"}, cwd=Path("C:/"))
+        resolve_db_path(env={"SOUND_MACHINA_DB": "relative/sound_machina.db"}, cwd=tmp_path)
 
 
-def test_bare_relative_env_override_rejected():
+def test_bare_relative_env_override_rejected(tmp_path):
     with pytest.raises(StartupError):
-        resolve_db_path(env={"SOUND_MACHINA_DB": "sound_machina.db"}, cwd=Path("C:/"))
+        resolve_db_path(env={"SOUND_MACHINA_DB": "sound_machina.db"}, cwd=tmp_path)
 
 
 # --- T27 / R32 / C2-c: ambiguity detection, never a silent second empty DB ---
