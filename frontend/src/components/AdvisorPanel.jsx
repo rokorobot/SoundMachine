@@ -5,16 +5,8 @@ import { useProjectStore } from '../store/projectStore';
 import { Compass, AlertTriangle, AlertCircle, Info, ArrowUpRight } from 'lucide-react';
 
 export default function AdvisorPanel() {
-  const { recommendations, isGenerating, setBlueprintField } = useProjectStore();
-
-  if (isGenerating) {
-    return (
-      <div className="border border-zinc-800 bg-zinc-950/90 backdrop-blur rounded-lg p-5 shadow-2xl h-full flex flex-col justify-center items-center space-y-2 min-h-[180px]">
-        <Compass className="w-6 h-6 text-zinc-650 animate-spin" />
-        <span className="text-[10px] font-mono text-zinc-550 uppercase tracking-widest">CALIBRATING OPTIMIZER...</span>
-      </div>
-    );
-  }
+  const { displayed } = useProjectStore();
+  const recommendations = displayed?.recommendations;
 
   // Label helper to map slider key names to clean dashboard labels
   const targetLabels = {

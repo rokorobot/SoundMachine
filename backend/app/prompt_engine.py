@@ -27,7 +27,7 @@ class PromptEngine:
         if blueprint["atmosphere_depth"] > 60:
             style_list.append("atmospheric")
             
-        style_tags = ", ".join(style_list)[:120] # Suno limit safety
+        style_tags = ", ".join(style_list)  # R13: no hidden 120-char truncation
         
         # Section Prompt Formulation (incorporates structures and motifs)
         lyrics_prompt = (

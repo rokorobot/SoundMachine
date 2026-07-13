@@ -5,12 +5,14 @@ import { useProjectStore } from '../store/projectStore';
 import { Database, Clock, RefreshCw, GitPullRequest, LayoutList } from 'lucide-react';
 
 export default function BlueprintLibraryPanel() {
-  const { 
-    snapshots, 
-    fetchSnapshots, 
-    restoreSnapshot, 
-    setReferenceBlueprintFromSnapshot, 
-    activeSnapshotId 
+  const {
+    snapshots,
+    snapshotsTotal,
+    snapshotsCursor,
+    fetchSnapshots,
+    restoreSnapshot,
+    setReferenceBlueprintFromSnapshot,
+    boundSnapshotId,
   } = useProjectStore();
 
   // Load snapshot registry on mount
@@ -78,7 +80,8 @@ export default function BlueprintLibraryPanel() {
         ) : (
           <div className="space-y-1.5">
             {snapshots.map((snap) => {
-              const isActive = activeSnapshotId === snap.snapshot_id;
+              const isActive = boundSnapshotId === snap.snapshot_id;
+              const isLegacy = !snap.engine_version;
               
               return (
                 <div 
@@ -99,6 +102,14 @@ export default function BlueprintLibraryPanel() {
                       {isActive && (
                         <span className="text-[7px] bg-cyan-950 border border-cyan-800/40 text-cyan-400 px-1 rounded font-normal uppercase tracking-widest">
                           ACTIVE
+                        </span>
+                      )}
+                      {isLegacy && (
+                        <span
+                          className="text-[7px] bg-amber-950 border border-amber-800/40 text-amber-400 px-1 rounded font-normal uppercase tracking-widest"
+                          title="Pre-WS1 snapshot: motif/timeline are reconstructed by current engines, not historical output."
+                        >
+                          LEGACY
                         </span>
                       )}
                     </div>
@@ -146,6 +157,21 @@ export default function BlueprintLibraryPanel() {
               );
             })}
           </div>
+        )}
+      </div>
+
+      {/* Pagination: load more (R10) */}
+      <div className="flex items-center justify-between border-t border-zinc-900 pt-2">
+        <span className="text-[8px] font-mono text-zinc-600 uppercase tracking-widest">
+          {snapshots.length} / {snapshotsTotal} SNAPSHOTS
+        </span>
+        {snapshotsCursor && (
+          <button
+            onClick={() => fetchSnapshots({ before_id: snapshotsCursor, append: true })}
+            className="px-2.5 py-1 bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 text-zinc-400 hover:text-zinc-200 font-mono text-[8px] tracking-wider uppercase rounded transition"
+          >
+            LOAD MORE
+          </button>
         )}
       </div>
 

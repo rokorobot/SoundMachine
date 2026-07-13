@@ -19,7 +19,7 @@ const MUTATIONS = [
 ];
 
 export default function MutationPanel() {
-  const { blueprint, setBlueprintField, setFullBlueprint } = useProjectStore();
+  const { workingBlueprint: blueprint, setBlueprintField, setFullBlueprint } = useProjectStore();
   const { showNotification } = useUiStore();
 
   const applyMutation = (id, label) => {

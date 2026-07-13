@@ -5,9 +5,9 @@ import { useProjectStore } from '../store/projectStore';
 import { Anchor, RotateCcw, ArrowRight, TrendingUp, TrendingDown, GitCommit } from 'lucide-react';
 
 export default function CalibrationBaselinePanel() {
-  const { 
-    blueprint,
-    referenceBlueprint, 
+  const {
+    workingBlueprint: blueprint,
+    referenceBlueprint,
     comparisonResult, 
     setReferenceBlueprint, 
     clearReferenceBlueprint,

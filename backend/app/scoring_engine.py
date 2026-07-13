@@ -228,24 +228,10 @@ class ScoringEngine:
             })
 
         # 4. MODEL COMPATIBILITY RULES
-        if target_model == "suno":
-            if tags_len > 115:
-                model_compatibility -= 25
-                recommendations.append({
-                    "level": "error",
-                    "code": "SUNO_TAG_LIMIT",
-                    "message": f"SUNO TAG LIMIT: Style prompt has {tags_len} chars. Suno truncates at 120. Reduce slider values.",
-                    "target": "target_model"
-                })
-            elif tags_len > 95:
-                model_compatibility -= 8
-                recommendations.append({
-                    "level": "warning",
-                    "code": "SUNO_WARNING_LIMIT",
-                    "message": f"SUNO NEAR LIMIT: Style description is getting close to the 120-character truncation threshold.",
-                    "target": "target_model"
-                })
-        elif target_model == "udio":
+        # R13: the Suno 120-character assumption is removed pending separate
+        # platform research; no tag-length threshold penalty is applied. The
+        # actual tag length remains visible in the prompt terminal.
+        if target_model == "udio":
             if bpm > 160:
                 model_compatibility -= 20
                 recommendations.append({
@@ -273,7 +259,17 @@ class ScoringEngine:
 
         # 5. NEGATIVE PROMPT QUALITY RULES
         active_neg = prompts.get(target_model, {}).get("negative_prompt", "")
-        if active_neg == "none" or not active_neg.strip():
+        machine_empty = active_neg == "none" or not active_neg.strip()
+        if machine_empty and motif_type == "vocal phrase":
+            # R27: a vocal blueprint legitimately omits vocal exclusions. This is
+            # a machine-owned value, not an operator error, so it is not a deficit.
+            recommendations.append({
+                "level": "info",
+                "code": "VOCAL_NEGATIVE_MACHINE_MANAGED",
+                "message": "VOCAL EXCLUSIONS MACHINE-MANAGED: Vocal blueprints intentionally omit vocal exclusions; the negative prompt is machine-owned.",
+                "target": "target_model"
+            })
+        elif machine_empty:
             negative_prompt_quality = 40
             recommendations.append({
                 "level": "error",
