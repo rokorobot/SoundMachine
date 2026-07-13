@@ -76,7 +76,8 @@ export const useProjectStore = create((set, get) => {
     if (inFlightController) inFlightController.abort();
     const controller = new AbortController();
     inFlightController = controller;
-    set({ previewStatus: 'pending', displayed: computeDisplayed(get()) });
+    set({ previewStatus: 'pending' });
+    set({ displayed: computeDisplayed(get()) });
     const bp = get().workingBlueprint;
     try {
       const res = await fetch(`${BACKEND_URL}/api/preview`, {
@@ -99,7 +100,10 @@ export const useProjectStore = create((set, get) => {
     } catch (e) {
       if (e && e.name === 'AbortError') return; // superseded; revision guard is authoritative
       if (issuedRevision === get().revision) {
-        set({ previewStatus: 'error', previewError: 'Preview failed', displayed: computeDisplayed(get()) });
+        // Set status first, THEN recompute displayed so it reflects the error
+        // state (computeDisplayed reads previewStatus via get()).
+        set({ previewStatus: 'error', previewError: 'Preview failed' });
+        set({ displayed: computeDisplayed(get()) });
       }
     }
   }

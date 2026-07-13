@@ -233,3 +233,79 @@ it('after save, lineage becomes snapshot-origin for the next descendant', async 
   expect(lin.parentSnapshotId).toBe('CUSTOM_0001');
   expect(lin.key).toBe('lk-1');
 });
+
+
+// --- T19: a failed preview preserves prior valid preview artifacts ---
+it('T19: failed preview retains prior artifacts, exposes error, fabricates nothing', async () => {
+  let mode = 'ok';
+  global.fetch = vi.fn((url, opts) => {
+    if (mode === 'fail') return Promise.reject(new Error('network down'));
+    return Promise.resolve(jsonResponse(previewBody(opts.body)));
+  });
+  // Preview A succeeds and installs valid artifacts.
+  store.getState().setBlueprintField('bpm', 100);
+  await vi.advanceTimersByTimeAsync(350);
+  const aRev = store.getState().revision;
+  const aArtifacts = store.getState().previewArtifacts;
+  expect(aArtifacts).toBeTruthy();
+  expect(aArtifacts.issuedRevision).toBe(aRev);
+  expect(store.getState().displayed.motif_block).toBe(`preview-motif-${aRev}`);
+  expect(store.getState().displayed.status).toBe('live');
+
+  // The next preview fails.
+  mode = 'fail';
+  store.getState().setBlueprintField('bpm', 101);
+  await vi.advanceTimersByTimeAsync(350);
+
+  const st = store.getState();
+  // A's artifacts are exactly preserved (same object; nothing fabricated/partial).
+  expect(st.previewArtifacts).toBe(aArtifacts);
+  expect(st.previewArtifacts.issuedRevision).toBe(aRev);
+  // Error state exposed.
+  expect(st.previewStatus).toBe('error');
+  // Displayed still surfaces A's artifacts, flagged not-live (never as fresh output for the new edit).
+  expect(st.displayed.motif_block).toBe(`preview-motif-${aRev}`);
+  expect(st.displayed.status).toBe('error');
+});
+
+
+// --- T30: an in-flight save of A never presents A as belonging to newer state B ---
+it('T30: stale/interim save of A is never attributed to newer state B', async () => {
+  let resolveSave;
+  global.fetch = vi.fn((url, opts) => {
+    if (String(url).includes('/api/snapshots') && opts && opts.method === 'POST') {
+      return new Promise((res) => { resolveSave = () => res(jsonResponse(savedRecord(opts.body))); });
+    }
+    if (String(url).includes('/api/snapshots?')) return Promise.resolve(jsonResponse({ items: [], total: 0, next_cursor: null }));
+    return Promise.resolve(jsonResponse(previewBody(opts.body)));
+  });
+
+  const before = store.getState().workingBlueprint.bpm;
+  const savePromise = store.getState().saveSnapshot('Proj'); // save A captured
+  // Move the store to state B before A resolves.
+  store.getState().setBlueprintField('bpm', before + 50);
+  const revB = store.getState().revision;
+
+  // A's save resolves.
+  resolveSave();
+  await savePromise;
+
+  const st = store.getState();
+  // Working state is B, never replaced by captured/returned A.
+  expect(st.workingBlueprint.bpm).toBe(before + 50);
+  // A is bound as the new base, but state is dirty vs B, so A is NOT shown as B's final output.
+  expect(st.boundSnapshotId).toBe('CUSTOM_0001');
+  expect(st.isDirty).toBe(true);
+  expect(st.displayed.status).toBe('pending');   // interim: flagged, not attributed to B as final
+  expect(st.displayed.status).not.toBe('bound');
+  // Parent advanced to A (R19); next descendant will chain from A.
+  expect(st.lineage.parentSnapshotId).toBe('CUSTOM_0001');
+  expect(st.lineage.originType).toBe('snapshot');
+
+  // B's own preview then resolves and applies for the CURRENT revision only.
+  await vi.advanceTimersByTimeAsync(350);
+  const st2 = store.getState();
+  expect(st2.previewArtifacts).toBeTruthy();
+  expect(st2.previewArtifacts.issuedRevision).toBe(st2.revision);
+  expect(st2.previewArtifacts.issuedRevision).toBeGreaterThanOrEqual(revB);
+});
