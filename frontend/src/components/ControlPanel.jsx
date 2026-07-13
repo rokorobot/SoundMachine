@@ -40,7 +40,7 @@ const HARMONY_MODES = [
 ];
 
 export default function ControlPanel() {
-  const { blueprint, setBlueprintField } = useProjectStore();
+  const { workingBlueprint: blueprint, setBlueprintField } = useProjectStore();
 
   const handleSliderChange = (field, e) => {
     setBlueprintField(field, parseInt(e.target.value, 10));

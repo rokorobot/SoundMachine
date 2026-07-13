@@ -5,9 +5,10 @@ import { useProjectStore } from '../store/projectStore';
 import { Layers, Clock, Flame, ChevronRight } from 'lucide-react';
 
 export default function ArrangementTimeline() {
-  const { arrangementTimeline, blueprint, isGenerating } = useProjectStore();
+  const { displayed, workingBlueprint: blueprint } = useProjectStore();
+  const arrangementTimeline = displayed?.arrangement_timeline;
 
-  if (isGenerating || !arrangementTimeline || arrangementTimeline.length === 0) {
+  if (!arrangementTimeline || arrangementTimeline.length === 0) {
     return (
       <div className="border border-zinc-800 bg-zinc-950/90 backdrop-blur rounded-lg p-6 shadow-2xl h-full flex flex-col justify-center items-center space-y-3 min-h-[300px]">
         <Layers className="w-8 h-8 text-zinc-650 animate-pulse" />

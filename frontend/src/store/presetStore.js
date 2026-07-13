@@ -16,61 +16,41 @@ export const usePresetStore = create((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       const response = await fetch(`${BACKEND_URL}/api/presets`);
-      if (!response.ok) {
-        throw new Error('Failed to load presets');
-      }
+      if (!response.ok) throw new Error('Failed to load presets');
       const data = await response.json();
+      // R28: do NOT auto-select a preset; the session starts unbound as CUSTOM.
       set({ presets: data, isLoading: false });
-      
-      // Auto select first preset (e.g. Psych Tec) if nothing selected
-      if (data.length > 0 && !get().selectedPresetId) {
-        get().selectPreset(data[0].id);
-      }
     } catch (err) {
       set({ error: err.message, isLoading: false });
     }
   },
 
   selectPreset: (id) => {
-    const preset = get().presets.find(p => p.id === id);
+    const preset = get().presets.find((p) => p.id === id);
     if (preset) {
       set({ selectedPresetId: id });
-      // Update the active blueprint in the projectStore
-      useProjectStore.getState().setFullBlueprint(preset.blueprint);
+      // Lineage attribution is stamped at bind time (R8), not re-derived per request.
+      useProjectStore.getState().bindToPreset(preset);
     }
   },
 
   savePreset: async (name) => {
-    const blueprint = useProjectStore.getState().blueprint;
+    const blueprint = useProjectStore.getState().workingBlueprint;
     set({ isLoading: true, error: null });
     try {
       const response = await fetch(`${BACKEND_URL}/api/presets`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name,
-          bank: get().activeBank,
-          blueprint
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, bank: get().activeBank, blueprint }),
       });
-
-      if (!response.ok) {
-        throw new Error('Failed to save preset');
-      }
-
+      if (!response.ok) throw new Error('Failed to save preset');
       const newPreset = await response.json();
-      
-      // Refresh list
       await get().fetchPresets();
-      
-      // Select the newly saved preset
       set({ selectedPresetId: newPreset.id });
       return true;
     } catch (err) {
       set({ error: err.message, isLoading: false });
       return false;
     }
-  }
+  },
 }));

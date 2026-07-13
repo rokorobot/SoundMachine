@@ -5,9 +5,11 @@ import { useProjectStore } from '../store/projectStore';
 import { ShieldCheck, ShieldAlert, Activity, AlertTriangle, CheckCircle } from 'lucide-react';
 
 export default function ScorePanel() {
-  const { scores, recommendations, isGenerating } = useProjectStore();
+  const { displayed, workingBlueprint } = useProjectStore();
+  const scores = displayed?.scores;
+  const evaluatesTarget = (workingBlueprint?.target_model || 'suno').toUpperCase();
 
-  if (isGenerating || !scores) {
+  if (!scores) {
     return (
       <div className="border border-zinc-800 bg-zinc-950/90 backdrop-blur rounded-lg p-6 shadow-2xl h-full flex flex-col justify-center items-center space-y-3 min-h-[300px]">
         <Activity className="w-8 h-8 text-zinc-650 animate-pulse" />
@@ -48,7 +50,7 @@ export default function ScorePanel() {
           <h2 className="text-sm font-bold font-mono tracking-widest text-zinc-100 uppercase">GOVERNANCE DIAGNOSTICS</h2>
         </div>
         <span className="text-[10px] font-mono bg-zinc-900 border border-zinc-850 px-2 py-0.5 rounded text-zinc-400">
-          SYS_MONITOR V0.2
+          EVALUATES: {evaluatesTarget}
         </span>
       </div>
 
