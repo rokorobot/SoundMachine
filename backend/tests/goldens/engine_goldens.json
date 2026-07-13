@@ -1,0 +1,795 @@
+{
+  "pipeline_version": "1.0.0-ws1",
+  "cases": {
+    "psycho_default": {
+      "prompts": {
+        "suno": {
+          "style_tags": "psycho glitch techno, 132bpm, instrumental, glitch, heavy bass",
+          "prompt_body": "[Intro]\n[Atmosphere: moderate spatial depth, natural room reverb, warm acoustic spaces]\n[Tempo: uptempo, fast-paced, high-speed energy]\n\n[Verse 1]\n[Rhythm: punishing blast beats, hyper-compressed industrial kicks, overwhelming rhythmic chaos, dense complex breakbeats]\n[Bass: heavy driving bass, gritty saturated low-end]\n\n[Motif Showcase]\n[clear, prominent fragmenting cathedral organ motif]\n[Harmony: layered, rich harmonies in a minor scale]\n\n[Glitch Break]\n[Texture: chaotic digital fragmentation, severe glitching, granular audio degradation, stutter spray]\n\n[Outro]\n[Structure: fragmented anti-drop structure, unexpected jump cuts, micro-breakdowns]\n[End]",
+          "negative_prompt": "vocals, singing"
+        },
+        "udio": {
+          "tags": "psycho glitch techno, electronic, 132 bpm, energy level 90, cathedral organ, heavy driving bass, idm, glitch",
+          "prompt_body": "[Instrumental Intro - moderate spatial depth, natural room reverb, warm acoustic spaces]\n[Verse - punishing blast beats, hyper-compressed industrial kicks, overwhelming rhythmic chaos, dense complex breakbeats]\n[Bass Drop - heavy driving bass, gritty saturated low-end]\n[Primary Motif Hook - clear, prominent fragmenting cathedral organ motif]\n[Bridge - chaotic digital fragmentation, severe glitching, granular audio degradation, stutter spray]\n[Outro - fragmented anti-drop structure, unexpected jump cuts, micro-breakdowns]",
+          "negative_prompt": "vocals, voice, singing"
+        },
+        "active_target": "suno"
+      },
+      "scores": {
+        "overall": 90,
+        "motif_clarity": 86,
+        "genre_focus": 92,
+        "prompt_density": 90,
+        "model_compatibility": 94,
+        "negative_prompt_quality": 92,
+        "recommendations": [
+          {
+            "level": "info",
+            "code": "LOW_MOTIF_PRESENCE",
+            "message": "LOW MOTIF PRESENCE: Motif has a moderate presence. Increase slider to make it stand out.",
+            "target": "motif_presence"
+          },
+          {
+            "level": "info",
+            "code": "GENRE_STABLE",
+            "message": "GENRE STABLE: Temporal and rhythmic properties align perfectly with selected style footprint.",
+            "target": "genre"
+          },
+          {
+            "level": "info",
+            "code": "DENSITY_STABLE",
+            "message": "DENSITY STABLE: Tag density is balanced and fits model input constraints.",
+            "target": "glitch_density"
+          },
+          {
+            "level": "info",
+            "code": "MODEL_COMPATIBILITY_OK",
+            "message": "COMPATIBILITY OK: System calibration conforms to model parser constraints.",
+            "target": "target_model"
+          },
+          {
+            "level": "info",
+            "code": "CONSTRAINTS_OK",
+            "message": "CONSTRAINTS OK: Negative exclusions are well-calibrated and free of logical conflicts.",
+            "target": "target_model"
+          }
+        ]
+      },
+      "motif_block": "[Core Musical Identity:\ncold cathedral organ motif,\nminor-key obsessive 4-bar phrase,\ngradually fragmented by glitch processing,\nreintroduced after each structural breakdown or hard reset,\nserves as the emotional anchor inside the industrial chaos]",
+      "arrangement_timeline": [
+        {
+          "phase": "Intro",
+          "time_start": "00:00",
+          "time_end": "00:27",
+          "duration_seconds": 27,
+          "energy_level": 36,
+          "description": "Ambient soundscape layers initialized. Drum pulse bypassed, slow atmospheric swell."
+        },
+        {
+          "phase": "Establish Motif",
+          "time_start": "00:27",
+          "time_end": "01:07",
+          "duration_seconds": 40,
+          "energy_level": 62,
+          "description": "Melodic cells fade in. Base frequency lines introduced, establishing harmonic field."
+        },
+        {
+          "phase": "Pressure Build",
+          "time_start": "01:07",
+          "time_end": "01:43",
+          "duration_seconds": 36,
+          "energy_level": 81,
+          "description": "Rhythmic density increased. Glitch elements activate, filters sweeps rising in cutoff."
+        },
+        {
+          "phase": "Mutation / Peak",
+          "time_start": "01:43",
+          "time_end": "02:37",
+          "duration_seconds": 54,
+          "energy_level": 99,
+          "description": "Saturated peak performance. Maximum glitch triggers, drum impact maxed, motif fully modded."
+        },
+        {
+          "phase": "Outro / Residual Signal",
+          "time_start": "02:37",
+          "time_end": "03:04",
+          "duration_seconds": 27,
+          "energy_level": 27,
+          "description": "Signal decay. Reverb tails decay to silence, rhythm elements mute, residual synth noise."
+        }
+      ]
+    },
+    "coldwave": {
+      "prompts": {
+        "suno": {
+          "style_tags": "coldwave, 110bpm, instrumental, heavy bass",
+          "prompt_body": "[Intro]\n[Atmosphere: moderate spatial depth, natural room reverb, warm acoustic spaces]\n[Tempo: midtempo, steady groove]\n\n[Verse 1]\n[Rhythm: punishing blast beats, hyper-compressed industrial kicks, overwhelming rhythmic chaos, dense complex breakbeats]\n[Bass: heavy driving bass, gritty saturated low-end]\n\n[Motif Showcase]\n[clear, prominent fragmenting FM synth hook motif]\n[Harmony: layered, rich harmonies in a phrygian scale]\n\n[Glitch Break]\n[Texture: clean production, pristine digital signals]\n\n[Outro]\n[Structure: verse-chorus division, retro synth breakdowns, sudden cold endings]\n[End]",
+          "negative_prompt": "vocals, singing, glitch, noise"
+        },
+        "udio": {
+          "tags": "coldwave, electronic, 110 bpm, energy level 90, FM synth hook, heavy driving bass",
+          "prompt_body": "[Instrumental Intro - moderate spatial depth, natural room reverb, warm acoustic spaces]\n[Verse - punishing blast beats, hyper-compressed industrial kicks, overwhelming rhythmic chaos, dense complex breakbeats]\n[Bass Drop - heavy driving bass, gritty saturated low-end]\n[Primary Motif Hook - clear, prominent fragmenting FM synth hook motif]\n[Bridge - clean production, pristine digital signals]\n[Outro - verse-chorus division, retro synth breakdowns, sudden cold endings]",
+          "negative_prompt": "vocals, voice, singing"
+        },
+        "active_target": "udio"
+      },
+      "scores": {
+        "overall": 90,
+        "motif_clarity": 86,
+        "genre_focus": 92,
+        "prompt_density": 90,
+        "model_compatibility": 94,
+        "negative_prompt_quality": 92,
+        "recommendations": [
+          {
+            "level": "info",
+            "code": "LOW_MOTIF_PRESENCE",
+            "message": "LOW MOTIF PRESENCE: Motif has a moderate presence. Increase slider to make it stand out.",
+            "target": "motif_presence"
+          },
+          {
+            "level": "info",
+            "code": "GENRE_STABLE",
+            "message": "GENRE STABLE: Temporal and rhythmic properties align perfectly with selected style footprint.",
+            "target": "genre"
+          },
+          {
+            "level": "info",
+            "code": "DENSITY_STABLE",
+            "message": "DENSITY STABLE: Tag density is balanced and fits model input constraints.",
+            "target": "glitch_density"
+          },
+          {
+            "level": "info",
+            "code": "MODEL_COMPATIBILITY_OK",
+            "message": "COMPATIBILITY OK: System calibration conforms to model parser constraints.",
+            "target": "target_model"
+          },
+          {
+            "level": "info",
+            "code": "CONSTRAINTS_OK",
+            "message": "CONSTRAINTS OK: Negative exclusions are well-calibrated and free of logical conflicts.",
+            "target": "target_model"
+          }
+        ]
+      },
+      "motif_block": "[Core Musical Identity:\nmetallic FM synth hook motif,\nphrygian-mode tense eastern-flavored 4-bar phrase,\ngradually fragmented by glitch processing,\nreintroduced after each structural breakdown or hard reset,\nserves as the emotional anchor inside the industrial chaos]",
+      "arrangement_timeline": [
+        {
+          "phase": "Intro",
+          "time_start": "00:00",
+          "time_end": "00:32",
+          "duration_seconds": 32,
+          "energy_level": 36,
+          "description": "Ambient soundscape layers initialized. Drum pulse bypassed, slow atmospheric swell."
+        },
+        {
+          "phase": "Establish Motif",
+          "time_start": "00:32",
+          "time_end": "01:21",
+          "duration_seconds": 49,
+          "energy_level": 62,
+          "description": "Melodic cells fade in. Base frequency lines introduced, establishing harmonic field."
+        },
+        {
+          "phase": "Pressure Build",
+          "time_start": "01:21",
+          "time_end": "02:04",
+          "duration_seconds": 43,
+          "energy_level": 81,
+          "description": "Rhythmic density increased. Glitch elements activate, filters sweeps rising in cutoff."
+        },
+        {
+          "phase": "Mutation / Peak",
+          "time_start": "02:04",
+          "time_end": "03:09",
+          "duration_seconds": 65,
+          "energy_level": 99,
+          "description": "Saturated peak performance. Maximum glitch triggers, drum impact maxed, motif fully modded."
+        },
+        {
+          "phase": "Outro / Residual Signal",
+          "time_start": "03:09",
+          "time_end": "03:41",
+          "duration_seconds": 32,
+          "energy_level": 27,
+          "description": "Signal decay. Reverb tails decay to silence, rhythm elements mute, residual synth noise."
+        }
+      ]
+    },
+    "brutalist": {
+      "prompts": {
+        "suno": {
+          "style_tags": "brutalist techno, 135bpm, instrumental, glitch, heavy bass",
+          "prompt_body": "[Intro]\n[Atmosphere: moderate spatial depth, natural room reverb, warm acoustic spaces]\n[Tempo: uptempo, fast-paced, high-speed energy]\n\n[Verse 1]\n[Rhythm: punishing blast beats, hyper-compressed industrial kicks, overwhelming rhythmic chaos, dense complex breakbeats]\n[Bass: brutal, distorted, aggressive industrial synth bassline, punishing low-end]\n\n[Motif Showcase]\n[clear, prominent fragmenting bass motif motif]\n[Harmony: layered, rich harmonies in a chromatic scale]\n\n[Glitch Break]\n[Texture: chaotic digital fragmentation, severe glitching, granular audio degradation, stutter spray]\n\n[Outro]\n[Structure: relentless linear repetition, hypnotic loops, escalating noise walls]\n[End]",
+          "negative_prompt": "vocals, singing"
+        },
+        "udio": {
+          "tags": "brutalist techno, electronic, 135 bpm, energy level 90, bass motif, brutal, idm, glitch",
+          "prompt_body": "[Instrumental Intro - moderate spatial depth, natural room reverb, warm acoustic spaces]\n[Verse - punishing blast beats, hyper-compressed industrial kicks, overwhelming rhythmic chaos, dense complex breakbeats]\n[Bass Drop - brutal, distorted, aggressive industrial synth bassline, punishing low-end]\n[Primary Motif Hook - clear, prominent fragmenting bass motif motif]\n[Bridge - chaotic digital fragmentation, severe glitching, granular audio degradation, stutter spray]\n[Outro - relentless linear repetition, hypnotic loops, escalating noise walls]",
+          "negative_prompt": "vocals, voice, singing"
+        },
+        "active_target": "suno"
+      },
+      "scores": {
+        "overall": 90,
+        "motif_clarity": 86,
+        "genre_focus": 92,
+        "prompt_density": 90,
+        "model_compatibility": 94,
+        "negative_prompt_quality": 92,
+        "recommendations": [
+          {
+            "level": "info",
+            "code": "LOW_MOTIF_PRESENCE",
+            "message": "LOW MOTIF PRESENCE: Motif has a moderate presence. Increase slider to make it stand out.",
+            "target": "motif_presence"
+          },
+          {
+            "level": "info",
+            "code": "GENRE_STABLE",
+            "message": "GENRE STABLE: Temporal and rhythmic properties align perfectly with selected style footprint.",
+            "target": "genre"
+          },
+          {
+            "level": "info",
+            "code": "DENSITY_STABLE",
+            "message": "DENSITY STABLE: Tag density is balanced and fits model input constraints.",
+            "target": "glitch_density"
+          },
+          {
+            "level": "info",
+            "code": "MODEL_COMPATIBILITY_OK",
+            "message": "COMPATIBILITY OK: System calibration conforms to model parser constraints.",
+            "target": "target_model"
+          },
+          {
+            "level": "info",
+            "code": "CONSTRAINTS_OK",
+            "message": "CONSTRAINTS OK: Negative exclusions are well-calibrated and free of logical conflicts.",
+            "target": "target_model"
+          }
+        ]
+      },
+      "motif_block": "[Core Musical Identity:\ndistorted analog bass motif,\nchromatic-mode dissonant complex 2-bar phrase,\ngradually fragmented by glitch processing,\nreintroduced after each structural breakdown or hard reset,\nserves as the emotional anchor inside the industrial chaos]",
+      "arrangement_timeline": [
+        {
+          "phase": "Intro",
+          "time_start": "00:00",
+          "time_end": "00:26",
+          "duration_seconds": 26,
+          "energy_level": 36,
+          "description": "Ambient soundscape layers initialized. Drum pulse bypassed, slow atmospheric swell."
+        },
+        {
+          "phase": "Establish Motif",
+          "time_start": "00:26",
+          "time_end": "01:06",
+          "duration_seconds": 40,
+          "energy_level": 62,
+          "description": "Melodic cells fade in. Base frequency lines introduced, establishing harmonic field."
+        },
+        {
+          "phase": "Pressure Build",
+          "time_start": "01:06",
+          "time_end": "01:41",
+          "duration_seconds": 35,
+          "energy_level": 81,
+          "description": "Rhythmic density increased. Glitch elements activate, filters sweeps rising in cutoff."
+        },
+        {
+          "phase": "Mutation / Peak",
+          "time_start": "01:41",
+          "time_end": "02:34",
+          "duration_seconds": 53,
+          "energy_level": 99,
+          "description": "Saturated peak performance. Maximum glitch triggers, drum impact maxed, motif fully modded."
+        },
+        {
+          "phase": "Outro / Residual Signal",
+          "time_start": "02:34",
+          "time_end": "03:00",
+          "duration_seconds": 26,
+          "energy_level": 27,
+          "description": "Signal decay. Reverb tails decay to silence, rhythm elements mute, residual synth noise."
+        }
+      ]
+    },
+    "ambient": {
+      "prompts": {
+        "suno": {
+          "style_tags": "ambient, 75bpm, instrumental, heavy bass, atmospheric",
+          "prompt_body": "[Intro]\n[Atmosphere: cavernous cosmic reverbs, infinite decay tails, dark industrial drone backdrops, immense wall of sound]\n[Tempo: downtempo, slow-paced]\n\n[Verse 1]\n[Rhythm: minimalist drums, sparse clicking hats, occasional kick]\n[Bass: heavy driving bass, gritty saturated low-end]\n\n[Motif Showcase]\n[clear, prominent soaring choir pad motif]\n[Harmony: layered, rich harmonies in a minor scale]\n\n[Glitch Break]\n[Texture: clean production, pristine digital signals]\n\n[Outro]\n[Structure: no drum drops, slow organic swell, formless soundscapes]\n[End]",
+          "negative_prompt": "vocals, singing, glitch, noise"
+        },
+        "udio": {
+          "tags": "ambient, electronic, 75 bpm, energy level 20, choir pad, heavy driving bass, ambient, reverb",
+          "prompt_body": "[Instrumental Intro - cavernous cosmic reverbs, infinite decay tails, dark industrial drone backdrops, immense wall of sound]\n[Verse - minimalist drums, sparse clicking hats, occasional kick]\n[Bass Drop - heavy driving bass, gritty saturated low-end]\n[Primary Motif Hook - clear, prominent soaring choir pad motif]\n[Bridge - clean production, pristine digital signals]\n[Outro - no drum drops, slow organic swell, formless soundscapes]",
+          "negative_prompt": "vocals, voice, singing"
+        },
+        "active_target": "udio"
+      },
+      "scores": {
+        "overall": 90,
+        "motif_clarity": 86,
+        "genre_focus": 92,
+        "prompt_density": 90,
+        "model_compatibility": 94,
+        "negative_prompt_quality": 92,
+        "recommendations": [
+          {
+            "level": "info",
+            "code": "LOW_MOTIF_PRESENCE",
+            "message": "LOW MOTIF PRESENCE: Motif has a moderate presence. Increase slider to make it stand out.",
+            "target": "motif_presence"
+          },
+          {
+            "level": "info",
+            "code": "GENRE_STABLE",
+            "message": "GENRE STABLE: Temporal and rhythmic properties align perfectly with selected style footprint.",
+            "target": "genre"
+          },
+          {
+            "level": "info",
+            "code": "DENSITY_STABLE",
+            "message": "DENSITY STABLE: Tag density is balanced and fits model input constraints.",
+            "target": "glitch_density"
+          },
+          {
+            "level": "info",
+            "code": "MODEL_COMPATIBILITY_OK",
+            "message": "COMPATIBILITY OK: System calibration conforms to model parser constraints.",
+            "target": "target_model"
+          },
+          {
+            "level": "info",
+            "code": "CONSTRAINTS_OK",
+            "message": "CONSTRAINTS OK: Negative exclusions are well-calibrated and free of logical conflicts.",
+            "target": "target_model"
+          }
+        ]
+      },
+      "motif_block": "[Core Musical Identity:\nethereal choir pad motif,\nminor-key obsessive 4-bar phrase,\nsoaring dynamically over the rhythm track,\nreintroduced after each structural breakdown or hard reset,\nserves as the emotional anchor inside the industrial chaos]",
+      "arrangement_timeline": [
+        {
+          "phase": "Intro",
+          "time_start": "00:00",
+          "time_end": "00:48",
+          "duration_seconds": 48,
+          "energy_level": 8,
+          "description": "Ambient soundscape layers initialized. Drum pulse bypassed, slow atmospheric swell."
+        },
+        {
+          "phase": "Establish Motif",
+          "time_start": "00:48",
+          "time_end": "02:00",
+          "duration_seconds": 72,
+          "energy_level": 14,
+          "description": "Melodic cells fade in. Base frequency lines introduced, establishing harmonic field."
+        },
+        {
+          "phase": "Pressure Build",
+          "time_start": "02:00",
+          "time_end": "03:04",
+          "duration_seconds": 64,
+          "energy_level": 18,
+          "description": "Rhythmic density increased. Glitch elements activate, filters sweeps rising in cutoff."
+        },
+        {
+          "phase": "Mutation / Peak",
+          "time_start": "03:04",
+          "time_end": "04:40",
+          "duration_seconds": 96,
+          "energy_level": 22,
+          "description": "Saturated peak performance. Maximum glitch triggers, drum impact maxed, motif fully modded."
+        },
+        {
+          "phase": "Outro / Residual Signal",
+          "time_start": "04:40",
+          "time_end": "05:28",
+          "duration_seconds": 48,
+          "energy_level": 6,
+          "description": "Signal decay. Reverb tails decay to silence, rhythm elements mute, residual synth noise."
+        }
+      ]
+    },
+    "vocal_phrase": {
+      "prompts": {
+        "suno": {
+          "style_tags": "coldwave, 110bpm, vocals, heavy bass",
+          "prompt_body": "[Intro]\n[Atmosphere: moderate spatial depth, natural room reverb, warm acoustic spaces]\n[Tempo: midtempo, steady groove]\n\n[Verse 1]\n[Rhythm: punishing blast beats, hyper-compressed industrial kicks, overwhelming rhythmic chaos, dense complex breakbeats]\n[Bass: heavy driving bass, gritty saturated low-end]\n\n[Motif Showcase]\n[clear, prominent soaring vocal phrase motif]\n[Harmony: layered, rich harmonies in a minor scale]\n\n[Glitch Break]\n[Texture: dense glitch aesthetics, frequent micro-stutters, stutter-edits, tape stops]\n\n[Outro]\n[Structure: verse-chorus division, retro synth breakdowns, sudden cold endings]\n[End]",
+          "negative_prompt": "none"
+        },
+        "udio": {
+          "tags": "coldwave, electronic, 110 bpm, energy level 90, vocal phrase, heavy driving bass",
+          "prompt_body": "[Instrumental Intro - moderate spatial depth, natural room reverb, warm acoustic spaces]\n[Verse - punishing blast beats, hyper-compressed industrial kicks, overwhelming rhythmic chaos, dense complex breakbeats]\n[Bass Drop - heavy driving bass, gritty saturated low-end]\n[Primary Motif Hook - clear, prominent soaring vocal phrase motif]\n[Bridge - dense glitch aesthetics, frequent micro-stutters, stutter-edits, tape stops]\n[Outro - verse-chorus division, retro synth breakdowns, sudden cold endings]",
+          "negative_prompt": "instrumental solo"
+        },
+        "active_target": "suno"
+      },
+      "scores": {
+        "overall": 86,
+        "motif_clarity": 86,
+        "genre_focus": 72,
+        "prompt_density": 90,
+        "model_compatibility": 94,
+        "negative_prompt_quality": 92,
+        "recommendations": [
+          {
+            "level": "info",
+            "code": "LOW_MOTIF_PRESENCE",
+            "message": "LOW MOTIF PRESENCE: Motif has a moderate presence. Increase slider to make it stand out.",
+            "target": "motif_presence"
+          },
+          {
+            "level": "warning",
+            "code": "GLITCH_INTRUSION",
+            "message": "GLITCH INTRUSION: Coldwave requires clean rhythms. Lower glitch density below 40%.",
+            "target": "glitch_density"
+          },
+          {
+            "level": "info",
+            "code": "DENSITY_STABLE",
+            "message": "DENSITY STABLE: Tag density is balanced and fits model input constraints.",
+            "target": "glitch_density"
+          },
+          {
+            "level": "info",
+            "code": "MODEL_COMPATIBILITY_OK",
+            "message": "COMPATIBILITY OK: System calibration conforms to model parser constraints.",
+            "target": "target_model"
+          },
+          {
+            "level": "info",
+            "code": "VOCAL_NEGATIVE_MACHINE_MANAGED",
+            "message": "VOCAL EXCLUSIONS MACHINE-MANAGED: Vocal blueprints intentionally omit vocal exclusions; the negative prompt is machine-owned.",
+            "target": "target_model"
+          },
+          {
+            "level": "info",
+            "code": "CONSTRAINTS_OK",
+            "message": "CONSTRAINTS OK: Negative exclusions are well-calibrated and free of logical conflicts.",
+            "target": "target_model"
+          }
+        ]
+      },
+      "motif_block": "[Core Musical Identity:\nprocessed vocal phrase motif,\nminor-key obsessive 4-bar phrase,\nsoaring dynamically over the rhythm track,\nreintroduced after each structural breakdown or hard reset,\nserves as the emotional anchor inside the industrial chaos]",
+      "arrangement_timeline": [
+        {
+          "phase": "Intro",
+          "time_start": "00:00",
+          "time_end": "00:32",
+          "duration_seconds": 32,
+          "energy_level": 36,
+          "description": "Ambient soundscape layers initialized. Drum pulse bypassed, slow atmospheric swell."
+        },
+        {
+          "phase": "Establish Motif",
+          "time_start": "00:32",
+          "time_end": "01:21",
+          "duration_seconds": 49,
+          "energy_level": 62,
+          "description": "Melodic cells fade in. Base frequency lines introduced, establishing harmonic field."
+        },
+        {
+          "phase": "Pressure Build",
+          "time_start": "01:21",
+          "time_end": "02:04",
+          "duration_seconds": 43,
+          "energy_level": 81,
+          "description": "Rhythmic density increased. Glitch elements activate, filters sweeps rising in cutoff."
+        },
+        {
+          "phase": "Mutation / Peak",
+          "time_start": "02:04",
+          "time_end": "03:09",
+          "duration_seconds": 65,
+          "energy_level": 99,
+          "description": "Saturated peak performance. Maximum glitch triggers, drum impact maxed, motif fully modded."
+        },
+        {
+          "phase": "Outro / Residual Signal",
+          "time_start": "03:09",
+          "time_end": "03:41",
+          "duration_seconds": 32,
+          "energy_level": 27,
+          "description": "Signal decay. Reverb tails decay to silence, rhythm elements mute, residual synth noise."
+        }
+      ]
+    },
+    "no_motif": {
+      "prompts": {
+        "suno": {
+          "style_tags": "psycho glitch techno, 132bpm, instrumental, glitch, heavy bass",
+          "prompt_body": "[Intro]\n[Atmosphere: moderate spatial depth, natural room reverb, warm acoustic spaces]\n[Tempo: uptempo, fast-paced, high-speed energy]\n\n[Verse 1]\n[Rhythm: punishing blast beats, hyper-compressed industrial kicks, overwhelming rhythmic chaos, dense complex breakbeats]\n[Bass: heavy driving bass, gritty saturated low-end]\n\n[Motif Showcase]\n[no primary melodic theme, textured sound design focus]\n[Harmony: layered, rich harmonies in a minor scale]\n\n[Glitch Break]\n[Texture: chaotic digital fragmentation, severe glitching, granular audio degradation, stutter spray]\n\n[Outro]\n[Structure: fragmented anti-drop structure, unexpected jump cuts, micro-breakdowns]\n[End]",
+          "negative_prompt": "vocals, singing"
+        },
+        "udio": {
+          "tags": "psycho glitch techno, electronic, 132 bpm, energy level 90, no motif, heavy driving bass, idm, glitch",
+          "prompt_body": "[Instrumental Intro - moderate spatial depth, natural room reverb, warm acoustic spaces]\n[Verse - punishing blast beats, hyper-compressed industrial kicks, overwhelming rhythmic chaos, dense complex breakbeats]\n[Bass Drop - heavy driving bass, gritty saturated low-end]\n[Primary Motif Hook - no primary melodic theme, textured sound design focus]\n[Bridge - chaotic digital fragmentation, severe glitching, granular audio degradation, stutter spray]\n[Outro - fragmented anti-drop structure, unexpected jump cuts, micro-breakdowns]",
+          "negative_prompt": "vocals, voice, singing"
+        },
+        "active_target": "suno"
+      },
+      "scores": {
+        "overall": 82,
+        "motif_clarity": 45,
+        "genre_focus": 92,
+        "prompt_density": 90,
+        "model_compatibility": 94,
+        "negative_prompt_quality": 92,
+        "recommendations": [
+          {
+            "level": "error",
+            "code": "NO_THEMATIC_ANCHOR",
+            "message": "NO THEMATIC ANCHOR: The track lacks a melodic motif, which may lead to generic sound design.",
+            "target": "motif_type"
+          },
+          {
+            "level": "info",
+            "code": "GENRE_STABLE",
+            "message": "GENRE STABLE: Temporal and rhythmic properties align perfectly with selected style footprint.",
+            "target": "genre"
+          },
+          {
+            "level": "info",
+            "code": "DENSITY_STABLE",
+            "message": "DENSITY STABLE: Tag density is balanced and fits model input constraints.",
+            "target": "glitch_density"
+          },
+          {
+            "level": "info",
+            "code": "MODEL_COMPATIBILITY_OK",
+            "message": "COMPATIBILITY OK: System calibration conforms to model parser constraints.",
+            "target": "target_model"
+          },
+          {
+            "level": "info",
+            "code": "CONSTRAINTS_OK",
+            "message": "CONSTRAINTS OK: Negative exclusions are well-calibrated and free of logical conflicts.",
+            "target": "target_model"
+          }
+        ]
+      },
+      "motif_block": "[Core Musical Identity:\nno primary melodic motif,\nfocus strictly on micro-rhythm and texture,\ndrones and atmospheric tension serve as structural glue]",
+      "arrangement_timeline": [
+        {
+          "phase": "Intro",
+          "time_start": "00:00",
+          "time_end": "00:27",
+          "duration_seconds": 27,
+          "energy_level": 36,
+          "description": "Ambient soundscape layers initialized. Drum pulse bypassed, slow atmospheric swell."
+        },
+        {
+          "phase": "Establish Motif",
+          "time_start": "00:27",
+          "time_end": "01:07",
+          "duration_seconds": 40,
+          "energy_level": 62,
+          "description": "Melodic cells fade in. Base frequency lines introduced, establishing harmonic field."
+        },
+        {
+          "phase": "Pressure Build",
+          "time_start": "01:07",
+          "time_end": "01:43",
+          "duration_seconds": 36,
+          "energy_level": 81,
+          "description": "Rhythmic density increased. Glitch elements activate, filters sweeps rising in cutoff."
+        },
+        {
+          "phase": "Mutation / Peak",
+          "time_start": "01:43",
+          "time_end": "02:37",
+          "duration_seconds": 54,
+          "energy_level": 99,
+          "description": "Saturated peak performance. Maximum glitch triggers, drum impact maxed, motif fully modded."
+        },
+        {
+          "phase": "Outro / Residual Signal",
+          "time_start": "02:37",
+          "time_end": "03:04",
+          "duration_seconds": 27,
+          "energy_level": 27,
+          "description": "Signal decay. Reverb tails decay to silence, rhythm elements mute, residual synth noise."
+        }
+      ]
+    },
+    "min_boundary": {
+      "prompts": {
+        "suno": {
+          "style_tags": "ambient, 40bpm, instrumental",
+          "prompt_body": "[Intro]\n[Atmosphere: dry production, upfront spatial treatment, intimate close-mic feel]\n[Tempo: downtempo, slow-paced]\n\n[Verse 1]\n[Rhythm: minimalist drums, sparse clicking hats, occasional kick]\n[Bass: smooth, deep sub-bass, clean low-end]\n\n[Motif Showcase]\n[no primary melodic theme, textured sound design focus]\n[Harmony: simple minimalist harmonies in a minor scale]\n\n[Glitch Break]\n[Texture: clean production, pristine digital signals]\n\n[Outro]\n[Structure: no drum drops, slow organic swell, formless soundscapes]\n[End]",
+          "negative_prompt": "vocals, singing, glitch, noise"
+        },
+        "udio": {
+          "tags": "ambient, electronic, 40 bpm, energy level 0, no motif, smooth",
+          "prompt_body": "[Instrumental Intro - dry production, upfront spatial treatment, intimate close-mic feel]\n[Verse - minimalist drums, sparse clicking hats, occasional kick]\n[Bass Drop - smooth, deep sub-bass, clean low-end]\n[Primary Motif Hook - no primary melodic theme, textured sound design focus]\n[Bridge - clean production, pristine digital signals]\n[Outro - no drum drops, slow organic swell, formless soundscapes]",
+          "negative_prompt": "vocals, voice, singing"
+        },
+        "active_target": "suno"
+      },
+      "scores": {
+        "overall": 71,
+        "motif_clarity": 45,
+        "genre_focus": 62,
+        "prompt_density": 65,
+        "model_compatibility": 94,
+        "negative_prompt_quality": 92,
+        "recommendations": [
+          {
+            "level": "error",
+            "code": "NO_THEMATIC_ANCHOR",
+            "message": "NO THEMATIC ANCHOR: The track lacks a melodic motif, which may lead to generic sound design.",
+            "target": "motif_type"
+          },
+          {
+            "level": "warning",
+            "code": "TEMPO_MISMATCH_AMBIENT",
+            "message": "TEMPO MISMATCH: Ambient tracks are typically optimal at 50-90 BPM.",
+            "target": "bpm"
+          },
+          {
+            "level": "warning",
+            "code": "UNDER_DESCRIBED",
+            "message": "UNDER-DESCRIBED: Prompt tag set is very brief. Consider tweaking controls to add sound descriptors.",
+            "target": "glitch_density"
+          },
+          {
+            "level": "info",
+            "code": "MODEL_COMPATIBILITY_OK",
+            "message": "COMPATIBILITY OK: System calibration conforms to model parser constraints.",
+            "target": "target_model"
+          },
+          {
+            "level": "info",
+            "code": "CONSTRAINTS_OK",
+            "message": "CONSTRAINTS OK: Negative exclusions are well-calibrated and free of logical conflicts.",
+            "target": "target_model"
+          }
+        ]
+      },
+      "motif_block": "[Core Musical Identity:\nno primary melodic motif,\nfocus strictly on micro-rhythm and texture,\ndrones and atmospheric tension serve as structural glue]",
+      "arrangement_timeline": [
+        {
+          "phase": "Intro",
+          "time_start": "00:00",
+          "time_end": "01:30",
+          "duration_seconds": 90,
+          "energy_level": 0,
+          "description": "Ambient soundscape layers initialized. Drum pulse bypassed, slow atmospheric swell."
+        },
+        {
+          "phase": "Establish Motif",
+          "time_start": "01:30",
+          "time_end": "03:45",
+          "duration_seconds": 135,
+          "energy_level": 0,
+          "description": "Melodic cells fade in. Base frequency lines introduced, establishing harmonic field."
+        },
+        {
+          "phase": "Pressure Build",
+          "time_start": "03:45",
+          "time_end": "05:45",
+          "duration_seconds": 120,
+          "energy_level": 0,
+          "description": "Rhythmic density increased. Glitch elements activate, filters sweeps rising in cutoff."
+        },
+        {
+          "phase": "Mutation / Peak",
+          "time_start": "05:45",
+          "time_end": "08:45",
+          "duration_seconds": 180,
+          "energy_level": 0,
+          "description": "Saturated peak performance. Maximum glitch triggers, drum impact maxed, motif fully modded."
+        },
+        {
+          "phase": "Outro / Residual Signal",
+          "time_start": "08:45",
+          "time_end": "10:15",
+          "duration_seconds": 90,
+          "energy_level": 0,
+          "description": "Signal decay. Reverb tails decay to silence, rhythm elements mute, residual synth noise."
+        }
+      ]
+    },
+    "max_boundary": {
+      "prompts": {
+        "suno": {
+          "style_tags": "psycho glitch techno, 240bpm, instrumental, glitch, heavy bass, atmospheric",
+          "prompt_body": "[Intro]\n[Atmosphere: cavernous cosmic reverbs, infinite decay tails, dark industrial drone backdrops, immense wall of sound]\n[Tempo: hyper-tempo, frenetic speed, breakneck pace]\n\n[Verse 1]\n[Rhythm: punishing blast beats, hyper-compressed industrial kicks, overwhelming rhythmic chaos, dense complex breakbeats]\n[Bass: brutal, distorted, aggressive industrial synth bassline, punishing low-end]\n\n[Motif Showcase]\n[dominant, front-and-center fragmenting cathedral organ motif]\n[Harmony: highly complex, avant-garde, intricate harmonies in a minor scale]\n\n[Glitch Break]\n[Texture: chaotic digital fragmentation, severe glitching, granular audio degradation, stutter spray]\n\n[Outro]\n[Structure: fragmented anti-drop structure, unexpected jump cuts, micro-breakdowns]\n[End]",
+          "negative_prompt": "vocals, singing"
+        },
+        "udio": {
+          "tags": "psycho glitch techno, electronic, 240 bpm, energy level 100, cathedral organ, brutal, idm, glitch, ambient, reverb",
+          "prompt_body": "[Instrumental Intro - cavernous cosmic reverbs, infinite decay tails, dark industrial drone backdrops, immense wall of sound]\n[Verse - punishing blast beats, hyper-compressed industrial kicks, overwhelming rhythmic chaos, dense complex breakbeats]\n[Bass Drop - brutal, distorted, aggressive industrial synth bassline, punishing low-end]\n[Primary Motif Hook - dominant, front-and-center fragmenting cathedral organ motif]\n[Bridge - chaotic digital fragmentation, severe glitching, granular audio degradation, stutter spray]\n[Outro - fragmented anti-drop structure, unexpected jump cuts, micro-breakdowns]",
+          "negative_prompt": "vocals, voice, singing"
+        },
+        "active_target": "suno"
+      },
+      "scores": {
+        "overall": 82,
+        "motif_clarity": 94,
+        "genre_focus": 62,
+        "prompt_density": 70,
+        "model_compatibility": 94,
+        "negative_prompt_quality": 92,
+        "recommendations": [
+          {
+            "level": "info",
+            "code": "MOTIF_STABLE",
+            "message": "MOTIF STABLE: Primary musical motif is well-anchored and clearly defined.",
+            "target": "motif_type"
+          },
+          {
+            "level": "warning",
+            "code": "TEMPO_MISMATCH_TECHNO",
+            "message": "TEMPO MISMATCH: Psycho Glitch Techno is typically optimal at 125-140 BPM (currently 240).",
+            "target": "bpm"
+          },
+          {
+            "level": "warning",
+            "code": "PROMPT_DENSITY_OVERLOAD",
+            "message": "PROMPT DENSITY OVERLOAD: High energy combined with maximum sound pressure risks muddying the generated track.",
+            "target": "energy"
+          },
+          {
+            "level": "info",
+            "code": "MODEL_COMPATIBILITY_OK",
+            "message": "COMPATIBILITY OK: System calibration conforms to model parser constraints.",
+            "target": "target_model"
+          },
+          {
+            "level": "info",
+            "code": "CONSTRAINTS_OK",
+            "message": "CONSTRAINTS OK: Negative exclusions are well-calibrated and free of logical conflicts.",
+            "target": "target_model"
+          }
+        ]
+      },
+      "motif_block": "[Core Musical Identity:\ncold cathedral organ motif,\nminor-key obsessive 4-bar phrase,\ngradually fragmented by glitch processing,\nhighly dominant, front-and-center in the mix, overriding background signals,\nserves as the absolute structural anchor of the entire composition]",
+      "arrangement_timeline": [
+        {
+          "phase": "Intro",
+          "time_start": "00:00",
+          "time_end": "00:15",
+          "duration_seconds": 15,
+          "energy_level": 40,
+          "description": "Ambient soundscape layers initialized. Drum pulse bypassed, slow atmospheric swell."
+        },
+        {
+          "phase": "Establish Motif",
+          "time_start": "00:15",
+          "time_end": "00:37",
+          "duration_seconds": 22,
+          "energy_level": 70,
+          "description": "Melodic cells fade in. Base frequency lines introduced, establishing harmonic field."
+        },
+        {
+          "phase": "Pressure Build",
+          "time_start": "00:37",
+          "time_end": "00:57",
+          "duration_seconds": 20,
+          "energy_level": 90,
+          "description": "Rhythmic density increased. Glitch elements activate, filters sweeps rising in cutoff."
+        },
+        {
+          "phase": "Mutation / Peak",
+          "time_start": "00:57",
+          "time_end": "01:27",
+          "duration_seconds": 30,
+          "energy_level": 100,
+          "description": "Saturated peak performance. Maximum glitch triggers, drum impact maxed, motif fully modded."
+        },
+        {
+          "phase": "Outro / Residual Signal",
+          "time_start": "01:27",
+          "time_end": "01:42",
+          "duration_seconds": 15,
+          "energy_level": 30,
+          "description": "Signal decay. Reverb tails decay to silence, rhythm elements mute, residual synth noise."
+        }
+      ]
+    }
+  }
+}

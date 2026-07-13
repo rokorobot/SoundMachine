@@ -1,74 +1,144 @@
-from pydantic import BaseModel, Field
-from typing import Optional
-from datetime import datetime
+from datetime import datetime, timezone
+from typing import Optional, List, Literal
+
+from pydantic import BaseModel, Field, ConfigDict, field_serializer
+
+# --- Enumerated vocabularies (proven safe against all 186 stored blueprints) ---
+Genre = Literal["psycho_glitch_techno", "coldwave", "brutalist_techno", "ambient"]
+MotifType = Literal[
+    "cathedral organ", "synth piano", "FM synth hook", "electric guitar riff",
+    "vocal phrase", "bass motif", "bell motif", "choir pad", "no motif",
+]
+MotifBehavior = Literal["fragmenting", "repeating", "soaring", "staccato", "ascending"]
+HarmonyMode = Literal["minor", "major", "phrygian", "chromatic", "dorian"]
+TargetModel = Literal["suno", "udio"]
+OriginType = Literal["preset", "snapshot", "custom"]
+
+
+def iso_z(dt: Optional[datetime]) -> Optional[str]:
+    """Serialize a datetime as UTC ISO-8601 with a trailing Z. Naive datetimes
+    (legacy rows) are defined as UTC."""
+    if dt is None:
+        return None
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    else:
+        dt = dt.astimezone(timezone.utc)
+    return dt.isoformat().replace("+00:00", "Z")
+
 
 class CompositionBlueprint(BaseModel):
-    genre: str = Field(..., description="Genre of the track (e.g. psycho_glitch_techno, coldwave, brutalist_techno, ambient)")
-    bpm: int = Field(..., ge=40, le=240, description="Beats per minute")
-    energy: int = Field(..., ge=0, le=100, description="Overall energy of the composition")
-    motif_type: str = Field(..., description="Primary melodic motif instrument/sound type")
-    motif_presence: int = Field(..., ge=0, le=100, description="Melodic presence of the motif")
-    motif_behavior: str = Field(..., description="Melodic behavior style of the motif (e.g. fragmenting, repeating, soaring)")
-    harmony_mode: str = Field(..., description="Musical mode or scale mood (e.g. minor, major, phrygian, chromatic)")
-    harmony_complexity: int = Field(..., ge=0, le=100, description="Complexity of the harmonic structure")
-    bass_aggression: int = Field(..., ge=0, le=100, description="Aggressiveness and distortion level of basslines")
-    glitch_density: int = Field(..., ge=0, le=100, description="Amount of micro-glitch, stutter, and cut elements")
-    drum_intensity: int = Field(..., ge=0, le=100, description="Impact and complexity of the rhythmic section")
-    atmosphere_depth: int = Field(..., ge=0, le=100, description="Presence of pads, ambient noise, and reverb tails")
-    target_model: str = Field("suno", description="Target engine: 'suno' or 'udio'")
+    genre: Genre
+    bpm: int = Field(..., ge=40, le=240)
+    energy: int = Field(..., ge=0, le=100)
+    motif_type: MotifType
+    motif_presence: int = Field(..., ge=0, le=100)
+    motif_behavior: MotifBehavior
+    harmony_mode: HarmonyMode
+    harmony_complexity: int = Field(..., ge=0, le=100)
+    bass_aggression: int = Field(..., ge=0, le=100)
+    glitch_density: int = Field(..., ge=0, le=100)
+    drum_intensity: int = Field(..., ge=0, le=100)
+    atmosphere_depth: int = Field(..., ge=0, le=100)
+    target_model: TargetModel = "suno"
+
 
 class PresetBase(BaseModel):
-    name: str = Field(..., description="Preset name")
-    bank: str = Field("BANK_A", description="Preset bank")
+    name: str
+    bank: str = "BANK_A"
     blueprint: CompositionBlueprint
+
 
 class PresetCreate(PresetBase):
     pass
 
+
 class PresetResponse(PresetBase):
+    model_config = ConfigDict(from_attributes=True)
     id: int
     created_at: datetime
 
-    class Config:
-        from_attributes = True
+    @field_serializer("created_at")
+    def _ser_created_at(self, dt: datetime, _info):
+        return iso_z(dt)
 
-class GenerateRequest(CompositionBlueprint):
-    parent_preset_name: Optional[str] = None
-    parent_preset_id: Optional[int] = None
 
-class GenerateResponse(BaseModel):
-    blueprint: CompositionBlueprint
-    prompts: dict = Field(..., description="Map of prompt types to prompt text outputs")
+# --- Lifecycle: preview (non-persistent) ---
+class PreviewRequest(CompositionBlueprint):
+    client_revision: Optional[int] = None
+
+
+class PreviewResponse(BaseModel):
+    prompts: dict
     motif_block: str
     arrangement_timeline: list
     scores: dict
     recommendations: list
-    snapshot_id: Optional[str] = None
+    client_revision: Optional[int] = None
 
-class SnapshotResponse(BaseModel):
-    id: int
-    snapshot_id: str
-    lineage_name: str
-    version: int
-    parent_preset_id: Optional[int]
+
+# --- Lifecycle: save snapshot (server-authoritative, immutable) ---
+class LineageInput(BaseModel):
+    lineage_key: Optional[str] = None
+    display_name: Optional[str] = None
+    origin_type: OriginType = "custom"
+    origin_ref: Optional[str] = None
+    parent_snapshot_id: Optional[str] = None
+
+
+class SnapshotSaveRequest(BaseModel):
     blueprint: CompositionBlueprint
-    created_at: datetime
-    overall_score: int
+    lineage: LineageInput
 
-    class Config:
-        from_attributes = True
 
-class SnapshotDetailResponse(BaseModel):
+class SnapshotRecord(BaseModel):
+    """Complete artifact contract (R40): identical for save response and detail."""
     snapshot_id: str
-    lineage_name: str
+    lineage_key: str
+    lineage_display: str
     version: int
-    parent_preset_id: Optional[int]
+    parent_snapshot_id: Optional[str] = None
+    origin_type: Optional[str] = None
+    origin_ref: Optional[str] = None
     blueprint: CompositionBlueprint
     prompts: dict
     scores: dict
+    recommendations: list
     motif_block: str
     arrangement_timeline: list
+    engine_version: Optional[str] = None
+    artifacts_provenance: str
     created_at: datetime
 
-    class Config:
-        from_attributes = True
+    @field_serializer("created_at")
+    def _ser_created_at(self, dt: datetime, _info):
+        return iso_z(dt)
+
+
+class SnapshotListItem(BaseModel):
+    id: int
+    snapshot_id: str
+    lineage_key: Optional[str] = None
+    lineage_name: str
+    version: int
+    parent_snapshot_id: Optional[str] = None
+    blueprint: CompositionBlueprint
+    overall_score: int
+    engine_version: Optional[str] = None
+    created_at: datetime
+
+    @field_serializer("created_at")
+    def _ser_created_at(self, dt: datetime, _info):
+        return iso_z(dt)
+
+
+class SnapshotPage(BaseModel):
+    items: List[SnapshotListItem]
+    total: int
+    next_cursor: Optional[int] = None
+
+
+# --- Comparison (unchanged behavior; retained for /api/compare) ---
+class CompareRequest(BaseModel):
+    blueprint_a: CompositionBlueprint
+    blueprint_b: CompositionBlueprint

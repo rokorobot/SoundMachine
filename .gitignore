@@ -14,6 +14,16 @@ venv/
 env/
 *.pyc
 
+# Test / build artifacts
+.pytest_cache/
+.vitest/
+coverage/
+htmlcov/
+.coverage
+
+# Database backups (pre-migration safety copies)
+*.bak
+
 # Local databases
 backend/sound_machina.db
 *.db

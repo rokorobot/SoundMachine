@@ -1,8 +1,6 @@
 import json
-import sys
 import argparse
-from sqlalchemy.orm import Session
-from app.database import Preset, SessionLocal, engine, Base
+from app.database import Preset
 
 DEFAULT_PRESETS = [
     # BANK_A — Core Presets
@@ -683,41 +681,34 @@ DEFAULT_PRESETS = [
     }
 ]
 
-def seed_database(db: Session = None, reset: bool = False):
-    if reset:
-        print("Reset flag active: dropping all tables and recreating schema...")
-        Base.metadata.drop_all(bind=engine)
-
-    # Ensure tables exist
-    Base.metadata.create_all(bind=engine)
-    
-    close_db = False
-    if db is None:
-        db = SessionLocal()
-        close_db = True
-        
+def seed_if_empty(session_factory):
+    """Seed default presets only when the presets table is empty. Idempotent;
+    never modifies existing rows."""
+    db = session_factory()
     try:
-
         existing_count = db.query(Preset).count()
-        if existing_count == 0:
-            print(f"Seeding {len(DEFAULT_PRESETS)} default presets into database...")
-            for preset_data in DEFAULT_PRESETS:
-                db_preset = Preset(
-                    name=preset_data["name"],
-                    bank=preset_data.get("bank", "BANK_A"),
-                    blueprint_json=json.dumps(preset_data["blueprint"])
-                )
-                db.add(db_preset)
-            db.commit()
-            print("Seeding completed successfully.")
-        else:
-            print(f"Database already has {existing_count} presets. Skipping seed. (Use reset=True to force overwrite)")
+        if existing_count != 0:
+            return 0
+        for preset_data in DEFAULT_PRESETS:
+            db.add(Preset(
+                name=preset_data["name"],
+                bank=preset_data.get("bank", "BANK_A"),
+                blueprint_json=json.dumps(preset_data["blueprint"]),
+            ))
+        db.commit()
+        return len(DEFAULT_PRESETS)
     finally:
-        if close_db:
-            db.close()
+        db.close()
+
 
 if __name__ == "__main__":
+    # CLI seeding path resolves the DB via the same rules as the app.
+    from app import database
+    from app.migrations import run_migrations
+
     parser = argparse.ArgumentParser(description="Seed Sound Machina Presets")
-    parser.add_argument("--reset", action="store_true", help="Reset/Wipe existing presets before seeding")
     args = parser.parse_args()
-    seed_database(reset=args.reset)
+    engine = database.configure()
+    run_migrations(engine, db_path=database.DB_PATH, backup=True)
+    n = seed_if_empty(database.SessionLocal)
+    print(f"Seeded {n} presets." if n else "Presets already present; nothing to seed.")
