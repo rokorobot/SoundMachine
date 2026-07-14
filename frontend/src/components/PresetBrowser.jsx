@@ -74,7 +74,7 @@ export default function PresetBrowser() {
 
       {/* Bank Description Banner */}
       <div className="relative z-10 text-[9px] text-zinc-500 font-mono mb-3 uppercase tracking-wider leading-relaxed border-b border-zinc-900 pb-2">
-        <span className="text-green-500/80 font-semibold">{activeBank}</span> // {activeBankInfo.desc}
+        <span className="text-green-500/80 font-semibold">{activeBank}</span>{' // '}{activeBankInfo.desc}
       </div>
 
       {/* Preset Cards Grid (compact scrollable box) */}
